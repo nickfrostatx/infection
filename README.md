@@ -6,4 +6,4 @@ Infection
 
 > A take-home interview question for Khan Academy.
 
-You can find the code in ``infection.py``.
+You can find the code in [``infection.py``](infection.py).
