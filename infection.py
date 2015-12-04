@@ -21,7 +21,7 @@ class User(object):
 def total_infection(user):
     """Infect all the users connected to user.
 
-    This is implemented with a breadth-first search.
+    This is implemented with a depth-first search.
     """
     if user.new_version:
         return
