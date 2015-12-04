@@ -19,3 +19,7 @@ user can coach any other user, there's no concept of someone being always a
 bipartite graph.
 
 Total Infection sounds like a quick graph traversal. Shouldn't be too bad.
+
+> build passing
+
+Sweet.
