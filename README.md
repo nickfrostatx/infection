@@ -18,5 +18,4 @@ user can coach any other user, there's no concept of someone being always a
 "coach" and someone else only a "student", so unfortunately this isn't a nice
 bipartite graph.
 
-Total Infection sounds like a quick brute force graph search. Shouldn't be too
-bad.
+Total Infection sounds like a quick graph traversal. Shouldn't be too bad.
