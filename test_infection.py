@@ -26,8 +26,4 @@ def test_total_infection():
     users[0].connect(users[1])
     users[1].connect(users[2])
     users[2].connect(users[0])
-    total_infection(users[0])
-    for i in range(3):
-        assert users[i].new_version
-    # User 3 should never be visited.
-    assert not users[3].new_version
+    assert list(total_infection(users[0])) == users[:3]

@@ -21,13 +21,18 @@ class User(object):
 def total_infection(user):
     """Infect all the users connected to user.
 
-    This is implemented with a depth-first search.
+    This generator is implemented with a depth-first search. Each node
+    is yielded as it is infected.
     """
     if user.new_version:
         return
+
     user.new_version = True
+    yield user
+
     for adjacent in user.adjacent:
-        total_infection(adjacent)
+        for infected in total_infection(adjacent):
+            yield infected
 
 
 def main():
