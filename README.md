@@ -53,3 +53,7 @@ users on the new feature.
 Let's break the our user graph down into connected components. We'll grab a
 subset of these components to try to get close to n total users. The subset sum
 problem is NP-complete, hence "this can be (really) slow" in the spec.
+
+For the implementation, I'm going to add an "infection" data structure, which
+contains the users in the connected component, and the version of the site those
+users should have.
