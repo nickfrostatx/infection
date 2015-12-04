@@ -35,3 +35,21 @@ one variable now.)
 
 This sounds like graph coloring, but it isn't. In fact, a valid colored graph
 would be the least optimal solution to this problem.
+
+Actually, reading a little more, it turns out this is an improper vertex
+coloring problem. There's a whole subclass of graph coloring problems in this
+space, including defective coloring. However, that isn't an exact fit for our
+problem.
+
+I'm going to go a different direction for now. The spec says to fail if an exact
+solution isn't possible. In context, I guess this means we're going to constrain
+the problem to allow no two connected verticies to run different colors. That's
+much easier.
+
+This approach actually makes more sense. We don't care about infecting exactly
+n nodes, we care about seamless user experience, while testing with *about* n
+users on the new feature.
+
+Let's break the our user graph down into connected components. We'll grab a
+subset of these components to try to get close to n total users. The subset sum
+problem is NP-complete, hence "this can be (really) slow" in the spec.
