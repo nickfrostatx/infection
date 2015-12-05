@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """The code."""
 
-from heapq import merge
-
 
 class User(object):
 
@@ -71,8 +69,9 @@ def subset_sum_approx(values, key_fn, target, error):
     """
     sums = [([], 0)]
     for val in values:
-        added_sums = ((s + [val], t + key_fn(val)) for s, t in sums)
-        new_sums = merge(sums, added_sums, key=lambda x: x[1])
+        added_sums = [(s + [val], t + key_fn(val)) for s, t in sums]
+        sums.extend(added_sums)
+        new_sums = iter(sorted(sums, key=lambda x: x[1]))
         last = next(new_sums)
         sums = [last]
         for s, t in new_sums:
