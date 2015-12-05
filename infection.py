@@ -68,6 +68,7 @@ def total_infection(user, new_version):
     """
     infection = infect(user)
     infection.version = new_version
+    return infection
 
 
 def main():
