@@ -79,9 +79,11 @@ def subset_sum_approx(values, key_fn, target, error):
         for s, t in new_sums:
             if sums[-1][1] <= (1 - error) * t <= target:
                 sums.append((s, t))
-
-    if len(sums) > 0 and sums[-1][1] >= (1 - error) * target:
-        return sums[-1]
+    if len(sums) > 0:
+        # Return only numbers within our error range
+        valid = list(filter(lambda s: s[1] >= (1 - error) * target, sums[-2:]))
+        if len(valid) > 0:
+            return min(valid, key=lambda s: abs(s[1] - target))
     return None
 
 

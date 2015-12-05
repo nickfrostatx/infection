@@ -57,9 +57,14 @@ def test_total_infection(circular_users):
 
 
 def test_subset_sum_approx():
-    data = [12, 1, 3, 8, 20, 50]
-    assert subset_sum_approx(data, lambda x: x, 14, 0.1) == ([12, 3], 15)
-    assert subset_sum_approx(data, lambda x: x, 14, 0.01) is None
+    data = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512]
+    assert subset_sum_approx(data, lambda x: x, 353, 0.001) == \
+        ([1, 32, 64, 256], 353)
+
+
+def test_subset_sum_not_found():
+    data = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512]
+    assert subset_sum_approx(data, lambda x: x, 2000, 0.001) == None
 
 
 def test_limited_infection(monkeypatch):
