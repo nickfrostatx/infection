@@ -115,11 +115,3 @@ def limited_infection(users, target, error, new_version):
     for infection in to_infect:
         infection.version = new_version
     return total
-
-
-def main():
-    """The main function."""
-
-
-if __name__ == '__main__':
-    main()
