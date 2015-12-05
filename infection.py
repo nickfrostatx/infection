@@ -64,8 +64,11 @@ def infect(user, infection=None):
 def subset_sum_approx(values, key_fn, target, error):
     """Find a subset of values for which the sum is close to target.
 
-    The value to add for each item in a set is the output of key_fn,
-    run with the item.
+    key_fn is a function returning the value to be summed
+
+    A valid sum will be within error of target:
+
+        target * (1 - error) < sum < target / (1 - error)
     """
     sums = [([], 0)]
     for val in values:
