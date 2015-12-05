@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """Test cases for infection.py, run using pytest."""
 
-from infection import User, Infection, infect, total_infection, \
-    limited_infection
+from infection import User, Infection, infect, subset_sum_approx, \
+                      total_infection, limited_infection
 import pytest
 
 
@@ -56,6 +56,12 @@ def test_total_infection(circular_users):
         assert user.version == 2
 
 
+def test_subset_sum_approx():
+    data = [12, 1, 3, 8, 20, 50]
+    assert subset_sum_approx(data, lambda x: x, 14, 0.1) == ([12, 3], 15)
+    assert subset_sum_approx(data, lambda x: x, 14, 0.01) is None
+
+
 def test_limited_infection(monkeypatch):
     """Test that limited_infection properly uses subset sum output."""
     users = [User(i, 1) for i in range(5)]
@@ -64,9 +70,15 @@ def test_limited_infection(monkeypatch):
     users[3].connect(users[4])
     # Override subset_sum_approx to just return the 0, 1, 2 group
     monkeypatch.setattr('infection.subset_sum_approx',
-                        lambda *a: ([users[0].infection], 0))
-    limited_infection(users, 3, 2)
+                        lambda *a: ([users[0].infection], 3))
+    assert limited_infection(users, 3, .1, 2) == 3
     for user in users[:3]:
         assert user.version == 2
     for user in users[3:]:
         assert user.version == 1
+
+
+def test_limited_infection_fail(monkeypatch):
+    """See what happens if we don't get a valid subset."""
+    monkeypatch.setattr('infection.subset_sum_approx', lambda *a: None)
+    assert limited_infection([User(1)], 1, .1, 2) is None

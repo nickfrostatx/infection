@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """The code."""
 
+from heapq import merge
+
 
 class User(object):
 
@@ -61,13 +63,25 @@ def infect(user, infection=None):
     return infection
 
 
-def subset_sum_approx(values, key_fn, target):
+def subset_sum_approx(values, key_fn, target, error):
     """Find a subset of values for which the sum is close to target.
 
     The value to add for each item in a set is the output of key_fn,
     run with the item.
     """
-    return values, sum(key_fn(item) for item in values)
+    sums = [([], 0)]
+    for val in values:
+        added_sums = ((s + [val], t + key_fn(val)) for s, t in sums)
+        new_sums = merge(sums, added_sums, key=lambda x: x[1])
+        last = next(new_sums)
+        sums = [last]
+        for s, t in new_sums:
+            if last[1] <= (1 - error) * t and t <= target / (1 - error):
+                sums.append((s, t))
+
+    if len(sums) > 0 and sums[-1][1] >= (1 - error) * target:
+        return sums[-1]
+    return None
 
 
 def total_infection(user, new_version):
@@ -80,7 +94,7 @@ def total_infection(user, new_version):
     return infection
 
 
-def limited_infection(users, target, new_version):
+def limited_infection(users, target, error, new_version):
     """Infect about target users with new_version.
 
     Find all the unique infection groups, get a subset that sums near
@@ -89,7 +103,12 @@ def limited_infection(users, target, new_version):
     Return the total number of users that were infected.
     """
     infections = list(filter(None, (infect(user) for user in users)))
-    to_infect, total = subset_sum_approx(infections, len, target)
+    subset_sum = subset_sum_approx(infections, len, target, error)
+
+    if subset_sum is None:
+        return None
+
+    to_infect, total = subset_sum
     for infection in to_infect:
         infection.version = new_version
     return total
