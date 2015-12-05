@@ -57,3 +57,8 @@ problem is NP-complete, hence "this can be (really) slow" in the spec.
 For the implementation, I'm going to add an "infection" data structure, which
 contains the users in the connected component, and the version of the site those
 users should have.
+
+Since we can get an approximate value for the number of users, we can
+technically solve this problem in polynomial time, using an approximate solution
+to the subset sum. We're completely throwing that whole "exactly n users" thing
+out the window now.
