@@ -88,7 +88,7 @@ def limited_infection(users, target, new_version):
 
     Return the total number of users that were infected.
     """
-    infections = [infect(user) for user in users if user is not None]
+    infections = list(filter(None, (infect(user) for user in users)))
     to_infect, total = subset_sum_approx(infections, len, target)
     for infection in to_infect:
         infection.version = new_version
