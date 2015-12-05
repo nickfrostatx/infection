@@ -42,12 +42,12 @@ class Infection(set):
 def infect(user, infection=None):
     """Add all users connected to user to a common infection group.
 
-    Return the infection.
+    Return the infection, or None the user already has one.
 
     This is just a DFS, should run in O(n) time.
     """
     if user.infection is not None:
-        return user.infection
+        return None
 
     # Default to a new infection
     if infection is None:
@@ -61,6 +61,15 @@ def infect(user, infection=None):
     return infection
 
 
+def subset_sum_approx(values, key_fn, target):
+    """Find a subset of values for which the sum is close to target.
+
+    The value to add for each item in a set is the output of key_fn,
+    run with the item.
+    """
+    return values, sum(key_fn(item) for item in values)
+
+
 def total_infection(user, new_version):
     """Infect all the users connected to user.
 
@@ -69,6 +78,21 @@ def total_infection(user, new_version):
     infection = infect(user)
     infection.version = new_version
     return infection
+
+
+def limited_infection(users, target, new_version):
+    """Infect about target users with new_version.
+
+    Find all the unique infection groups, get a subset that sums near
+    the target, and infect this subset.
+
+    Return the total number of users that were infected.
+    """
+    infections = [infect(user) for user in users if user is not None]
+    to_infect, total = subset_sum_approx(infections, len, target)
+    for infection in to_infect:
+        infection.version = new_version
+    return total
 
 
 def main():

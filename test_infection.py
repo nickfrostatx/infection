@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """Test cases for infection.py, run using pytest."""
 
-from infection import User, Infection, infect, total_infection
+from infection import User, Infection, infect, total_infection, \
+    limited_infection
 import pytest
 
 
@@ -53,3 +54,19 @@ def test_total_infection(circular_users):
     total_infection(circular_users[0], 2)
     for user in circular_users:
         assert user.version == 2
+
+
+def test_limited_infection(monkeypatch):
+    """Test that limited_infection properly uses subset sum output."""
+    users = [User(i, 1) for i in range(5)]
+    users[0].connect(users[1])
+    users[1].connect(users[2])
+    users[3].connect(users[4])
+    # Override subset_sum_approx to just return the 0, 1, 2 group
+    monkeypatch.setattr('infection.subset_sum_approx',
+                        lambda *a: ([users[0].infection], 0))
+    limited_infection(users, 3, 2)
+    for user in users[:3]:
+        assert user.version == 2
+    for user in users[3:]:
+        assert user.version == 1
