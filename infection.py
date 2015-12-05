@@ -68,7 +68,7 @@ def subset_sum_approx(values, key_fn, target, error):
 
     A valid sum will be within error of target:
 
-        target * (1 - error) < sum < target / (1 - error)
+        target * (1 - error) <= sum <= target / (1 - error)
     """
     sums = [([], 0)]
     for val in values:
