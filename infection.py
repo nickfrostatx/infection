@@ -78,7 +78,7 @@ def subset_sum_approx(values, key_fn, target, error):
         last = next(new_sums)
         sums = [last]
         for s, t in new_sums:
-            if last[1] <= (1 - error) * t and t <= target / (1 - error):
+            if last[1] <= (1 - error) * t <= target:
                 sums.append((s, t))
 
     if len(sums) > 0 and sums[-1][1] >= (1 - error) * target:
