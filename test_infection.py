@@ -74,8 +74,6 @@ def test_limited_infection(monkeypatch):
     users[1].connect(users[2])
     users[3].connect(users[4])
     # Override subset_sum_approx to just return the 0, 1, 2 group
-    monkeypatch.setattr('infection.subset_sum_approx',
-                        lambda *a: ([users[0].infection], 3))
     assert limited_infection(users, 3, .1, 2) == 3
     for user in users[:3]:
         assert user.version == 2
