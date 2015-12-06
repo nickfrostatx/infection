@@ -6,7 +6,10 @@ Infection
 
 > A take-home interview question for Khan Academy.
 
-You can find the code in [``infection.py``](infection.py).
+### [Live Demo](https://lit-basin-6396.herokuapp.com/)
+
+The algorithms live in [``infection.py``](infection.py), if that's what you're
+looking for.
 
 Writeup
 -------
