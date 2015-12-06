@@ -62,3 +62,7 @@ Since we can get an approximate value for the number of users, we can
 technically solve this problem in polynomial time, using an approximate solution
 to the subset sum. We're completely throwing that whole "exactly n users" thing
 out the window now.
+
+Alright, that solution seems to work. Now I need to visualize the process. That
+sounds like some D3.js to me. A quick Flask app to run the functions on the data
+and we should be set.
