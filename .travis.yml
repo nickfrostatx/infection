@@ -2,5 +2,5 @@ language: python
 python:
 - 3.5
 - 2.7
-install: pip install pytest pytest-pep8 pytest-pep257
+install: pip install Flask pytest pytest-pep8 pytest-pep257
 script: py.test -vv --pep8 --pep257
