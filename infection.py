@@ -87,7 +87,7 @@ def subset_sum_approx(values, key_fn, target, error):
     return None
 
 
-def total_infection(user, new_version):
+def total_infection(user, new_version=None):
     """Infect all the users connected to user.
 
     This runs in O(n).
