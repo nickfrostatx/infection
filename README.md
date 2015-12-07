@@ -71,4 +71,6 @@ sounds like some [D3.js](http://d3js.org/) to me. A quick Flask app to run the
 functions on the data and we should be set.
 
 The [force layout](https://github.com/mbostock/d3/wiki/Force-Layout) seems to be
-the method of choice for D3.js graph visualization.
+the method of choice for D3.js graph visualization. I need to generate a graph,
+and Wikipedia says a simple way to do that is the [Erdős–Rényi model]
+(https://en.wikipedia.org/wiki/Erd%C5%91s%E2%80%93R%C3%A9nyi_model).
