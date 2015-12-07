@@ -59,6 +59,9 @@ def infect():
             raise BadRequest('Expected an float error.')
         if error < 0 or error > 1:
             raise BadRequest('Error must be between 0 and 100.')
+        # Special case for target = n
+        if target == len(users):
+            return jsonify({'users': [user.id for user in users.values()]})
         groups = limited_infection(users.values(), target, error)
         if groups is None:
             users = None
