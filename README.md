@@ -67,5 +67,8 @@ to the subset sum. We're completely throwing that whole "exactly n users" thing
 out the window now.
 
 Alright, that solution seems to work. Now I need to visualize the process. That
-sounds like some D3.js to me. A quick Flask app to run the functions on the data
-and we should be set.
+sounds like some [D3.js](http://d3js.org/) to me. A quick Flask app to run the
+functions on the data and we should be set.
+
+The [force layout](https://github.com/mbostock/d3/wiki/Force-Layout) seems to be
+the method of choice for D3.js graph visualization.
