@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """A Flask app to visualize the infection algorithm."""
 
-from flask import Flask, request, abort, jsonify
+from flask import Flask, request, abort, jsonify, render_template
 from werkzeug.exceptions import BadRequest
 from infection import User, total_infection, limited_infection
 
@@ -24,6 +24,12 @@ def load_user_graph():
     except TypeError:
         raise BadRequest('Users must be a dictionary of lists.')
     return users
+
+
+@app.route('/')
+def home():
+    """Return the home page."""
+    return render_template('index.html')
 
 
 @app.route('/infect', methods=['POST'])

@@ -76,3 +76,10 @@ def test_total_infection(infect):
     }
     assert set(infect(users, 'type=total&user=e')['users']) == \
         set(['e', 'f', 'g', 'h', 'i'])
+
+
+def test_home_page():
+    with app.test_client() as client:
+        rv = client.get('/')
+        assert b'<title>Khan Academy Infection Demo</title>' in rv.data
+        assert rv.status_code == 200
