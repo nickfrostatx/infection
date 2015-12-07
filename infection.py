@@ -99,7 +99,7 @@ def total_infection(user, new_version=None):
     return infection
 
 
-def limited_infection(users, target, error, new_version):
+def limited_infection(users, target, error, new_version=None):
     """Infect about target users with new_version.
 
     Find all the unique infection groups, get a subset that sums near
@@ -117,4 +117,4 @@ def limited_infection(users, target, error, new_version):
     to_infect, total = subset_sum
     for infection in to_infect:
         infection.version = new_version
-    return total
+    return to_infect
