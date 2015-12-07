@@ -5,24 +5,66 @@
     <title>Khan Academy Infection Demo</title>
     <style>
       html {
-        background-color: #394551;
-        text-align: center;
+        background-color: #eee;
+        font-family: 'Helvetica', 'Arial', sans-serif;
       }
       body {
         margin: 0;
+        overflow-y: hidden; /* Take care of 4px CSS "feature" */
+      }
+      .controls {
+        color: #444;
+        left: 16px;
+        position: absolute;
+        text-align: center;
+        top: 20px;
+        width: 200px;
+      }
+      h1 {
+        font-family: 'HelveticaNeue-CondensedBold', 'Helvetica', 'Arial Narrow', 'Arial', sans-serif;
+        font-weight: normal;
+        letter-spacing: 1px;
+        margin: 0;
+      }
+      table {
+        margin: 10px auto;
+        width: 100%;
+      }
+      td {
+        font-size: 14px;
+        text-align: left;
+      }
+      input {
+        width: 20px;
       }
       .node {
-        stroke: #394551;
+        stroke: #eee;
         stroke-width: 1.5px;
       }
       .link {
-        stroke: #aaa;
+        stroke: #777;
         stroke-opacity: .6;
         stroke-width: 2px;
       }
     </style>
   </head>
   <body>
+    <div class="controls">
+      <h1>Infection</h1>
+      <p>Click any user to infect their neighbors</p>
+      <table>
+        <tr>
+          <td>To Infect:</td>
+          <td><input id="toinfect" value="30"></input>
+        </tr>
+        <tr>
+          <td>Allowed Error (0-100):</td>
+          <td><input id="error" value="10"></input>%
+        </tr>
+      </table>
+      <button id="infect">Limited Infection</button>
+    </div>
+    <svg></svg>
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script>
       var random_graph = function(n_nodes, n_edges) {
@@ -74,7 +116,7 @@
         .links(links)
         .start();
 
-      var svg = d3.select("body").append("svg")
+      var svg = d3.select("svg")
         .attr("width", width)
         .attr("height", height);
 
@@ -114,9 +156,8 @@
       });
 
       new_version = 0;
-
-      node.on('click', function(d) {
-        d3.json('/infect?type=total&user=' + d.id)
+      var load_infection = function(url) {
+        d3.json(url)
           .header("Content-Type", "application/json")
           .post(JSON.stringify({users: graph}), function(error, data) {
             if (error) return console.warn(error);
@@ -128,6 +169,17 @@
               return color(d.version);
             });
           });
+      };
+
+      node.on('click', function(d) {
+        load_infection('/infect?type=total&user=' + d.id);
+      });
+
+      var to_infect = document.getElementById('toinfect');
+      var error = document.getElementById('error');
+      d3.select('#infect').on('click', function() {
+        load_infection('/infect?type=limited&target=' + +to_infect.value
+                       + '&error=' + +error.value);
       });
     </script>
   </body>
