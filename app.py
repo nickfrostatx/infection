@@ -11,18 +11,21 @@ app = Flask(__name__)
 
 def load_user_graph():
     """Get the JSON-encoded user graph from the request body."""
-    json_users = request.get_json()
-    if json_users is None:
+    try:
+        json_users = request.get_json()['users']
+    except (TypeError, KeyError):
         raise BadRequest('You need to supply a JSON user graph.')
     try:
-        users = dict((str(id), User(str(id))) for id in json_users)
-        for id in json_users:
-            for adjacent_id in json_users[id]:
-                users[str(id)].connect(users[str(adjacent_id)])
+        assert isinstance(json_users, list)
+        users = dict((i, User(i)) for i in range(len(json_users)))
+        for i, adjacent in enumerate(json_users):
+            assert isinstance(adjacent, list)
+            for adjacent_id in adjacent:
+                users[i].connect(users[adjacent_id])
     except KeyError as e:
         raise BadRequest('Unknown connection in graph: {0}.'.format(e.args[0]))
-    except TypeError:
-        raise BadRequest('Users must be a dictionary of lists.')
+    except (TypeError, AssertionError):
+        raise BadRequest('Users must be a list of lists.')
     return users
 
 
@@ -38,9 +41,11 @@ def infect():
     users = load_user_graph()
     if request.args.get('type') == 'total':
         try:
-            user = users[request.args['user']]
+            user = users[int(request.args['user'])]
         except KeyError:
             raise BadRequest('Expected a valid user in param user.')
+        except ValueError:
+            raise BadRequest('User must be an integer.')
         infected = total_infection(user)
         return jsonify({'users': [user.id for user in infected]})
     elif request.args.get('type') == 'limited':
