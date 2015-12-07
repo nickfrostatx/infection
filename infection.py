@@ -77,7 +77,7 @@ def subset_sum_approx(values, key_fn, target, error):
         new_sums = iter(sorted(sums, key=lambda x: x[1]))
         sums = [next(new_sums)]
         for s, t in new_sums:
-            if sums[-1][1] <= (1 - error) * t <= target:
+            if sums[-1][1] < t and sums[-1][1] <= (1 - error) * t <= target:
                 sums.append((s, t))
     if len(sums) > 0:
         # Return only numbers within our error range
