@@ -15,10 +15,10 @@ def load_user_graph():
     if json_users is None:
         raise BadRequest('You need to supply a JSON user graph.')
     try:
-        users = dict((id, User(id)) for id in json_users)
+        users = dict((str(id), User(str(id))) for id in json_users)
         for id in json_users:
             for adjacent_id in json_users[id]:
-                users[id].connect(users[adjacent_id])
+                users[str(id)].connect(users[str(adjacent_id)])
     except KeyError as e:
         raise BadRequest('Unknown connection in graph: {0}.'.format(e.args[0]))
     except TypeError:
