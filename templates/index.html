@@ -44,7 +44,7 @@
         return graph;
       };
 
-      var graph = random_graph(100, 50);
+      var graph = random_graph(150, 75);
 
       // Make a map of just the keys
       var nodes = [];
@@ -67,7 +67,7 @@
       var color = d3.scale.category10();
 
       var force = d3.layout.force()
-        .charge(-100)
+        .charge(-80)
         .linkDistance(30)
         .size([width, height])
         .nodes(nodes)
