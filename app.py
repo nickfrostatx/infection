@@ -60,6 +60,9 @@ def infect():
         if error < 0 or error > 1:
             raise BadRequest('Error must be between 0 and 100.')
         groups = limited_infection(users.values(), target, error)
-        users = [u.id for group in groups for u in group]
+        if groups is None:
+            users = None
+        else:
+            users = [u.id for group in groups for u in group]
         return jsonify({'users': users})
     raise BadRequest('Expected total or limited from query param type.')

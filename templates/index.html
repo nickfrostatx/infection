@@ -37,6 +37,9 @@
       input {
         width: 20px;
       }
+      .err-msg {
+        color: #F44336;
+      }
       .node {
         stroke: #eee;
         stroke-width: 1.5px;
@@ -63,6 +66,7 @@
         </tr>
       </table>
       <button id="infect">Limited Infection</button>
+      <p class="err-msg"></p>
     </div>
     <svg></svg>
     <script src="https://d3js.org/d3.v3.min.js"></script>
@@ -156,11 +160,17 @@
       });
 
       new_version = 0;
+      var error_msg = d3.select('.err-msg');
       var load_infection = function(url) {
+        error_msg.text('');
         d3.json(url)
           .header("Content-Type", "application/json")
           .post(JSON.stringify({users: graph}), function(error, data) {
             if (error) return console.warn(error);
+            if (data.users === null) {
+              error_msg.text('Could not find a suitable group of users');
+              return;
+            }
             new_version++;
             data.users.forEach(function(id) {
               nodes[id].version = new_version;
