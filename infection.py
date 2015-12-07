@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """The code."""
 
+from random import shuffle
+
 
 class User(object):
 
@@ -106,6 +108,7 @@ def limited_infection(users, target, error, new_version):
     Return the total number of users that were infected.
     """
     infections = list(filter(None, (infect(user) for user in users)))
+    shuffle(infections)
     subset_sum = subset_sum_approx(infections, len, target, error)
 
     if subset_sum is None:
