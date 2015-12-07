@@ -8,6 +8,9 @@
         background-color: #394551;
         text-align: center;
       }
+      body {
+        margin: 0;
+      }
       .node {
         stroke: #394551;
         stroke-width: 1.5px;
@@ -77,6 +80,15 @@
       var svg = d3.select("body").append("svg")
         .attr("width", width)
         .attr("height", height);
+
+      var resize = function() {
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+        svg.attr("width", width).attr("height", height);
+        force.size([width, height]).resume();
+      };
+      resize();
+      d3.select(window).on("resize", resize);
 
       var link = svg.selectAll(".link")
           .data(links)
