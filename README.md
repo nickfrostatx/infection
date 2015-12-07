@@ -74,3 +74,5 @@ The [force layout](https://github.com/mbostock/d3/wiki/Force-Layout) seems to be
 the method of choice for D3.js graph visualization. I need to generate a graph,
 and Wikipedia says a simple way to do that is the [Erdős–Rényi model]
 (https://en.wikipedia.org/wiki/Erd%C5%91s%E2%80%93R%C3%A9nyi_model).
+
+After a couple edge-case modifications, I'd call that a working demo!
