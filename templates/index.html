@@ -25,29 +25,26 @@
   <body>
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script>
-      var graph = [
-        [1, 2],
-        [3],
-        [3],
-        [],
-        [5, 6, 7],
-        [],
-        [7],
-        [8],
-        [],
-        [],
-        [],
-        [],
-        [13, 14, 15, 16, 17, 18, 19, 20],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-      ];
+      var random_graph = function(n_nodes, n_edges) {
+        // Create the nodes
+        var graph = [];
+        for (var n = 0; n < n_nodes; n++) {
+          graph.push([]);
+        };
+
+        // Create the edges
+        for (var e = 0; e < n_edges; e++) {
+          var a = Math.floor(Math.random() * graph.length);
+          var b = Math.floor(Math.random() * graph.length);
+          if (a != b && graph[a].indexOf(b) == -1 && graph[b].indexOf(a) == -1)
+            graph[a].push(b);
+          else
+            e--;
+        };
+        return graph;
+      };
+
+      var graph = random_graph(100, 50);
 
       // Make a map of just the keys
       var nodes = [];
