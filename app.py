@@ -49,5 +49,17 @@ def infect():
         infected = total_infection(user)
         return jsonify({'users': [user.id for user in infected]})
     elif request.args.get('type') == 'limited':
-        return jsonify({'users': []})
+        try:
+            target = int(request.args['target'])
+        except (KeyError, ValueError):
+            raise BadRequest('Expected an integer target.')
+        try:
+            error = float(request.args['error']) / 100
+        except (KeyError, ValueError):
+            raise BadRequest('Expected an float error.')
+        if error < 0 or error > 1:
+            raise BadRequest('Error must be between 0 and 100.')
+        groups = limited_infection(users.values(), target, error)
+        users = [u.id for group in groups for u in group]
+        return jsonify({'users': users})
     raise BadRequest('Expected total or limited from query param type.')
