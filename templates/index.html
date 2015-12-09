@@ -49,6 +49,14 @@
         stroke-opacity: .6;
         stroke-width: 2px;
       }
+      .num {
+        fill: #444;
+        font-family: 'HelveticaNeue-CondensedBold', 'Helvetica', 'Arial Narrow', 'Arial', sans-serif;
+        font-size: 60px;
+        stroke: #fff;
+        stroke-width: 12x;
+        text-anchor: middle;
+      }
     </style>
   </head>
   <body>
@@ -178,6 +186,16 @@
             node.style('fill', function(d) {
               return color(d.version);
             });
+            var num = svg.append('text')
+                .text(data.users.length)
+                .attr('x', '50%')
+                .attr('y', '50%')
+                .attr('class', 'num')
+              .transition()
+                .duration(500)
+                .attr('y', '52%')
+                .style('opacity', 0.0)
+                .remove();
           });
       };
 
