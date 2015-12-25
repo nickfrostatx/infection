@@ -1,7 +1,7 @@
 Infection
 =========
 
-[![Build Status](https://api.travis-ci.com/nickfrostatx/infection.svg?token=YeitCXiqqz9YFA7WLxxh)](https://travis-ci.com/nickfrostatx/infection)
+[![Build Status](https://img.shields.io/travis/nickfrostatx/infection.svg)](https://travis-ci.org/nickfrostatx/infection)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/nickfrostatx/infection/master/LICENSE)
 
 > A take-home interview question for Khan Academy.
